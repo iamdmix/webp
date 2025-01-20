@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.ani1{
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  animation-name: example1;
+  animation-duration: 4s;
+}
+
+.ani2{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    animation: starShape 5s 5;
+    animation-direction: alternate;
+}
+
+.textstuff{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid black;
+    width: 0;
+    animation: typing 3s steps(12) forwards, blink 0.6s step-end infinite;
+}
+
+@keyframes typing {
+    from{
+        width:0;
+    }
+    to{
+        width: 12ch;
+    }
+}
+
+@keyframes blink{
+    50% {
+        border-color: transparent;
+    }
+}
+
+@keyframes example1 {
+  from {background-color: red;}
+  to {background-color: rgb(0, 68, 255);}
+}
+
+@keyframes starShape {
+    0% {
+        background-color: red;
+        left: 50%;
+        top: 0%;
+        text-decoration: dashed;
+    }
+    20% {
+        background-color: blue;
+        left: 80%;
+        top: 30%;
+        text-decoration: dotted;
+    }
+    40% {
+        background-color: darkblue;
+        left: 60%;
+        top: 70%;
+        text-decoration: line-through;
+    }
+    60% {
+        background-color: darkgreen;
+        left: 40%;
+        top: 70%;
+        text-decoration: overline;
+    }
+    80% {
+        background-color: green;
+        left: 20%;
+        top: 30%;
+        text-decoration: wavy;
+    }
+    100% {
+        background-color: red;
+        left: 50%;
+        top: 0%;
+        text-decoration: dashed;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1 style:"text-shadow: 3px 3px;">CSS Animation</h1>
+
+<div class="ani1"></div>
+<div class="ani2"></div>
+
+
+<h1 class="textstuff">VIT CHENNAI!</h1>
+
+</body>
+</html>
+
+
