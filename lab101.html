@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magazine Layout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .header {
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      column-count: 3; /* Divide the text into 3 columns */
+      column-gap: 20px; /* Add space between columns */
+      column-rule: 2px solid #ccc; /* Add lines between columns */
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Magazine-Like Layout</div>
+  <div class="content">
+    The sudoers security policy requires that most users authenticate themselves before they can use sudo. A password is not required if the invoking user is root, if the target user is the same as the invoking user, or if the policy has disabled authentication for the user or command. Unlike su(1), when sudoers requires authentication, it validates the invoking user's credentials, not the target user's (or root's) credentials. This can be changed via the rootpw, targetpw and runaspw flags, described later.
+
+If a user who is not listed in the policy tries to run a command via sudo, mail is sent to the proper authorities. The address used for such mail is configurable via the mailto Defaults entry (described later) and defaults to root.
+
+Note that mail will not be sent if an unauthorized user tries to run sudo with the -l or -v option. This allows users to determine for themselves whether or not they are allowed to use sudo.
+  </div>
+</body>
+</html>
