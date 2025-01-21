@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Magazine Layout</title>
+  <title>Magazine Layout with Pagination</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,6 +24,33 @@
       column-count: 3; /* Divide the text into 3 columns */
       column-gap: 20px; /* Add space between columns */
       column-rule: 2px solid #ccc; /* Add lines between columns */
+      margin-bottom: 20px;
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      color: #007bff;
+      padding: 10px 15px;
+      margin: 0 5px;
+      text-decoration: none;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .pagination a.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    .pagination a:hover {
+      background-color: #ddd;
+      border-color: #007bff;
     }
   </style>
 </head>
@@ -35,6 +62,14 @@
 If a user who is not listed in the policy tries to run a command via sudo, mail is sent to the proper authorities. The address used for such mail is configurable via the mailto Defaults entry (described later) and defaults to root.
 
 Note that mail will not be sent if an unauthorized user tries to run sudo with the -l or -v option. This allows users to determine for themselves whether or not they are allowed to use sudo.
+
+  </div>
+  <div class="pagination">
+    <a href="#">&#171; Prev</a>
+    <a href="#" class="active">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">Next &#187;</a>
   </div>
 </body>
 </html>
