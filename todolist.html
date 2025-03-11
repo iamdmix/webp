@@ -1,0 +1,56 @@
+<!-- A simple to do list to recreate what I will do in the exam -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <input type="text" id="task" placeholder="enter tasks">
+    <button onclick="addTask()" id='addTask'>AddTask</button>
+    <button onclick='reset()' id="reset">reset</button>
+
+    <ul id="list"></ul>
+
+    <script>
+        function addTask(){
+            let task = document.getElementById("task")
+            let list = document.getElementById("list")
+
+            if(task.value.trim()==""){
+                alert("Enter a task")
+                return
+            } 
+            
+            let li = document.createElement("li")
+            li.textContent = `${task.value}`
+
+            li.onclick = function(){
+                if(li.style.textDecoration === "line-through"){
+                    li.style.textDecoration = "none";
+                }else{
+                    li.style.textDecoration = "line-through"                   
+                }
+            }
+
+            let xbtn = document.createElement("button")
+            xbtn.textContent = "X"
+            xbtn.onclick = function(){
+                li.remove();
+            }
+
+            li.appendChild(xbtn)
+            list.appendChild(li)
+
+            task.value=""
+        }
+
+        function reset(){
+            document.getElementById("list").innerHTML = ""
+            document.getElementById("task").value= ""
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration</title>
+    <style>
+        .error { color: red; font-size: 14px; }
+        #confirmation { font-weight: bold; color: green; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Event Registration Form</h2>
+    <form id="eventForm">
+        <fieldset>
+            <legend>Personal Information</legend>
+            <label>User Name:</label>
+            <input type="text" id="uname" required>
+            <span class="error" id="nameError"></span><br><br>
+            
+            <label>Email address:</label>
+            <input type="email" id="uemail" required>
+            <span class="error" id="emailError"></span><br><br>
+            
+            <label>Phone Number:</label>
+            <input type="text" id="uphno" required>
+            <span class="error" id="phoneError"></span><br><br>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Event Details</legend>
+            <label for="type">Event Type:
+                <select name="type" id="eventtype" required>
+                    <option value="">Select a Session</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Seminar">Seminar</option>
+                    <option value="Concert">Concert</option>
+                </select>
+            </label>
+            <span class="error" id="eventTypeError"></span><br><br>
+            
+            <label>Ticket Type:</label>
+            <input type="radio" name="ttype" value="Standard"> Standard
+            <input type="radio" name="ttype" value="VIP"> VIP
+            <span class="error" id="ticketError"></span><br><br>
+            
+            <label>Add-ons:</label>
+            <input type="checkbox" name="addons" value="Parking Pass"> Parking Pass
+            <input type="checkbox" name="addons" value="Meal Plan"> Meal Plan
+            <span class="error" id="addonsError"></span><br><br>
+            
+            <label>Session Time:
+                <select id="sessionTime" required>
+                    <option value="">Select a Session</option>
+                    <option value="Morning">Morning</option>
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Evening">Evening</option>
+                </select>
+            </label>
+            <span class="error" id="sessionTimeError"></span><br><br>
+        </fieldset>
+        
+        <button type="submit">Register</button>
+    </form>
+    
+    <p id="confirmation"></p>
+    
+    <script>
+        document.getElementById("eventForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let valid = true;
+
+            const name = document.getElementById("uname").value.trim();
+            const email = document.getElementById("uemail").value.trim();
+            const phone = document.getElementById("uphno").value.trim();
+            const eventType = document.getElementById("eventtype").value;
+            const sessionTime = document.getElementById("sessionTime").value;
+            const ticket = document.querySelector("input[name='ttype']:checked");
+            const addons = document.querySelectorAll("input[name='addons']:checked");
+
+            // Name validation
+            document.getElementById("nameError").textContent = 
+                name.length >= 3 ? "" : "Name must be at least 3 characters long.";
+            if (name.length < 3) valid = false;
+
+            // Email validation
+            document.getElementById("emailError").textContent = 
+                email ? "" : "Please enter a valid email address.";
+            if (!email) valid = false;
+
+            // Phone validation (must be 10 digits)
+            document.getElementById("phoneError").textContent =
+                /^\d{10}$/.test(phone) ? "" : "Phone number must be exactly 10 digits.";
+            if (!/^\d{10}$/.test(phone)) valid = false;
+
+            // Event type validation
+            document.getElementById("eventTypeError").textContent =
+                eventType ? "" : "Please select an event type.";
+            if (!eventType) valid = false;
+
+            // Ticket validation
+            document.getElementById("ticketError").textContent =
+                ticket ? "" : "Please choose a ticket type.";
+            if (!ticket) valid = false;
+
+            // Add-ons validation
+            document.getElementById("addonsError").textContent =
+                addons.length > 0 ? "" : "Select at least one add-on.";
+            if (addons.length === 0) valid = false;
+
+            // Session time validation
+            document.getElementById("sessionTimeError").textContent =
+                sessionTime ? "" : "Please select a session time.";
+            if (!sessionTime) valid = false;
+
+            // If all fields are valid, show confirmation message
+            if (valid) {
+                let addonText = Array.from(addons).map(a => a.value).join(", ");
+                document.getElementById("confirmation").textContent = 
+                    `Thank you, ${name}! You have registered for ${eventType} with a ${ticket.value} ticket and selected add-ons: ${addonText}. Your session is scheduled for ${sessionTime}.`;
+                document.getElementById("eventForm").reset();
+            }
+        });
+    </script>
+</body>
+</html>
