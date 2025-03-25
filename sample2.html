@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart Simulator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        #cart-box {
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            border-radius: 5px;
+            background-color: #f4f4f4;
+        }
+        .reset-btn {
+            background-color: red;
+            color: white;
+            border: none;
+        }
+        .reset-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Basket</h1>
+    <div id="cart-box">
+        <input type="number" id="price" placeholder="Enter item price">
+        <button onclick="addItem()">Add Item</button>
+        <button class="reset-btn" onclick="resetList()">Reset List</button>
+    </div>
+
+    <ul id="items"></ul>
+
+    <p>Total amount in Cart: ₹<span id="total">0</span></p>
+
+    <script>
+        let amt = 0;
+
+        function addItem() {
+            let price = parseFloat(document.getElementById("price").value);
+            let itemList = document.getElementById("items");
+            let total = document.getElementById("total");
+
+            if (isNaN(price) || price <= 0) {
+                alert("Please enter a valid price!");
+                document.getElementById("price").value = "";
+                return;
+            }
+
+            let li = document.createElement("li");
+            li.textContent = "₹" + price.toFixed(2);
+            itemList.appendChild(li);
+
+            amt += price;
+            total.textContent = amt.toFixed(2);
+
+            document.getElementById("price").value = ""; // Clears input field
+        }
+
+        function resetList() {
+            document.getElementById("items").innerHTML = "";
+            document.getElementById("total").textContent = "0";
+            amt = 0;
+        }
+    </script>
+</body>
+</html>

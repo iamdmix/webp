@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Food</title>
+    <style>
+        .error { color: red; font-size: 14px; }
+        #confirmation { font-weight: bold; color: green; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Order Food</h1>
+    <form id="food">
+        <fieldset>
+            <legend>Customer Information</legend>
+            
+            <label>Customer Name</label>
+            <input type="text" id="cName" required>
+            <span class="error" id="nameError"></span><br><br>
+
+            <label>Delivery Address</label>
+            <input type="text" id="dAddress" required>
+            <span class="error" id="addressError"></span><br><br>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Order Details</legend>
+            
+            <label>Main Course</label>
+            <select name="mainC" id="mainC" required>
+                <option value="">Select a Main Course</option>
+                <option value="Pizza">Pizza</option>
+                <option value="Burger">Burger</option>
+                <option value="Pasta">Pasta</option>
+            </select>
+            <span class="error" id="mcError"></span><br><br>
+
+            <label>Drink</label>
+            <input type="radio" name="drink" value="Soda"> Soda
+            <input type="radio" name="drink" value="Juice"> Juice
+            <input type="radio" name="drink" value="Water"> Water
+            <span class="error" id="drinkError"></span><br><br>
+
+            <label>Extras</label>
+            <input type="checkbox" name="extras" value="Cheese"> Cheese
+            <input type="checkbox" name="extras" value="Fries"> Fries
+            <input type="checkbox" name="extras" value="Extra Sauce"> Extra Sauce
+            <span class="error" id="eError"></span><br><br>
+
+            <label>Order Type</label>
+            <input type="radio" name="oType" value="Home Delivery"> Home Delivery
+            <input type="radio" name="oType" value="Self Pickup"> Self Pickup
+            <span class="error" id="oError"></span><br><br>
+
+            <button type="submit" id="order">Order Now</button>
+        </fieldset>
+    </form>
+
+    <p id="confirmation"></p>
+            
+    <script>
+        document.getElementById("food").addEventListener("submit", function(event){
+            event.preventDefault();
+            let valid = true;
+
+            const name = document.getElementById("cName").value.trim();
+            const address = document.getElementById("dAddress").value.trim();
+            const mainc = document.getElementById("mainC").value;
+            const drink = document.querySelector("input[name='drink']:checked");
+            const extras = document.querySelectorAll("input[name='extras']:checked");
+            const oType = document.querySelector("input[name='oType']:checked");
+
+            document.getElementById("nameError").textContent = name.length >= 3 ? "" : "Name must be at least 3 characters long.";
+            if(name.length < 3) valid = false;
+
+            document.getElementById("addressError").textContent = address.length >= 10 ? "" : "Address must be at least 10 characters long.";
+            if(address.length < 10) valid = false;
+            
+            document.getElementById("mcError").textContent = mainc ? "" : "Please select a main course.";
+            if(!mainc) valid = false;
+
+            document.getElementById("drinkError").textContent = drink ? "" : "Please select a drink.";
+            if(!drink) valid = false;
+
+            document.getElementById("eError").textContent = extras.length > 0 ? "" : "Please select at least one extra.";
+            if(extras.length === 0) valid = false;
+
+            document.getElementById("oError").textContent = oType ? "" : "Please select an order type.";
+            if(!oType) valid = false;
+
+            if(valid){
+                let extrasText = Array.from(extras).map(e => e.value).join(", ");
+                document.getElementById("confirmation").textContent = 
+                    `Thank you, ${name}! Your order for ${mainc} with ${drink.value} and extras: ${extrasText} has been placed for ${oType.value}.`;
+
+                document.getElementById("food").reset();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAT Practice
+    </title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .hidden { display: none; }
+        .completed { text-decoration: line-through; }
+        .star { font-size: 24px; cursor: pointer; color: gray; }
+        .star.active { color: gold; }
+        .image { width: 100px; position: absolute; cursor: pointer; }
+        #canvas { border: 1px solid black; }
+    </style>
+</head>
+<body>
+    <h1>Interactive Dashboard </h1>
+    <!-- USER PROFILE FORM -->
+    <h2>User Profile </h2>
+    <input type="text" id="name" placeholder="Enter your name" required>
+    <input type="email" id="email" placeholder="Enter your email" required>
+    <textarea id="bio" placeholder="Enter your bio" rows="4" required></textarea>
+    <p>Characters: <span id="charCount">0</span>| Words: <span id="wordCount">0</span></p>
+    <button id="submitProfile">Save Profile</button>
+    <p id="profileData"></p>
+    
+    <!-- STAR RATING SYSTEM -->
+    <h2>Rate Us</h2>
+    <span class="star" data-value="1">*</span>
+    <span class="star" data-value="2">*</span>
+    <span class="star" data-value="3">*</span>
+    <span class="star" data-value="4">*</span>
+    <span class="star" data-value="5">*</span>
+    <p> Rating: <span id="ratingValue">0</span></p>
+
+    <!-- TO-DO LIST -->
+    <h2>To-Do List</h2>
+    <input type="text" id="taskName" placeholder="Enter a task">
+    <button id="addTask">Add Task</button>
+    <ul id="taskList"></ul>
+
+    <!-- IMAGE VIEWER -->
+    <h2>Image Viewer</h2>
+    <img src="https://via.placeholder.com/100" class="image" style="top: 100px; left: 100px;">
+    <img src="https://via.placeholder.com/100" class="image" style="top: 120px; left: 120px;">
+    <img src="https://via.placeholder.com/100" class="image" style="top: 140px; left: 140px;">
+
+    <!-- Random Shape Generator -->
+    <h2>Random Shape Generator</h2>
+    <canvas id="canvas" width="400" height="200"></canvas>
+    <button id="generate-shapes">Generate Shapes</button>
+
+    <!-- Multiple Choice Quiz -->
+    <h2>Quiz</h2>
+    <p>What is 2 + 2?</p>
+    <input type="radio" name="q1" value="3"> 3
+    <input type="radio" name="q1" value="4"> 4
+    <input type="radio" name="q1" value="5"> 5
+    <button id="submit-quiz">Submit Quiz</button>
+    <p id="quiz-result"></p>
+
+    <script src="pat2PracJS.js"></script>
+</body>
+</html>

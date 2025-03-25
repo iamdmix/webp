@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set 3</title>
+    <style>
+        .error { color: red; font-size: 14px; }
+        .confirmation { color: green; font-weight: bold; font-size: larger; }
+    </style>
+</head>
+<body>
+    <h1>Movie Night Preferences</h1>
+    <form id="movie">
+        <fieldset>
+            <legend>User Information</legend>
+            <label>User Name:</label>
+            <input type="text" id="name">
+            <span class="error" id="nError"></span><br><br>
+
+            <label>Companion Name:</label>
+            <input type="text" id="cname">
+        </fieldset>
+
+        <fieldset>
+            <legend>Movie Preference</legend>
+            <label>Movie Genre:</label>
+            <select id="mg">
+                <option value="">Select a genre from below</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Horror">Horror</option>
+            </select>
+            <span class="error" id="gError"></span><br><br>
+
+            <label>Viewing Mode:</label>
+            <input type="radio" name="vmode" value="Theatre">Theatre
+            <input type="radio" name="vmode" value="Streaming">Streaming
+            <input type="radio" name="vmode" value="DvD">DvD
+            <span class="error" id="vError"></span><br><br>
+
+            <label>Snacks:</label>
+            <input type="checkbox" name="snacks" value="Popcorn">Popcorn
+            <input type="checkbox" name="snacks" value="French Fries">French Fries
+            <input type="checkbox" name="snacks" value="Ice Cream">Ice Cream
+            <input type="checkbox" name="snacks" value="Soft Drinks">Soft Drinks
+            <span class="error" id="sError"></span><br><br>
+
+            <label>Movie Time:</label>
+            <select id="mt">
+                <option value="">Select a Time from below</option>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Night">Night</option>
+            </select>
+            <span class="error" id="tError"></span><br><br>
+
+            <button type="submit">Submit</button>
+        </fieldset>
+    </form>
+    <p id="confirmation"></p>
+
+    <script>
+        document.getElementById("movie").addEventListener("submit", function(event){
+            event.preventDefault();
+            let valid = true;
+
+            const name = document.getElementById("name").value.trim();
+            const cname = document.getElementById("cname").value.trim();
+            const genre = document.getElementById("mg").value;
+            const vmode = document.querySelector("input[name='vmode']:checked");
+            const snacks = document.querySelectorAll("input[name='snacks']:checked");
+            const mtime = document.getElementById("mt").value;
+
+            document.getElementById("nError").textContent = name.length >= 3 ? "" : "Name should be at least 3 characters long";
+            if (name.length < 3) valid = false;
+
+            document.getElementById("gError").textContent = genre ? "" : "Select at least one genre";
+            if (!genre) valid = false;
+
+            document.getElementById("vError").textContent = vmode ? "" : "Select Viewing Mode";
+            if (!vmode) valid = false;
+
+            document.getElementById("sError").textContent = snacks.length !== 0 ? "" : "Select at least one snack";
+            if (snacks.length === 0) valid = false;
+
+            document.getElementById("tError").textContent = mtime ? "" : "Select time of the movie";
+            if (!mtime) valid = false;
+
+            if (valid) {
+                let snacksList = Array.from(snacks).map(e => e.value).join(", ");
+                document.getElementById("confirmation").innerHTML = `
+                    <span class='confirmation'>Thank you ${name}, for your selections!<br>
+                    Companion: ${cname || "No companion specified"}<br>
+                    Genre: ${genre}<br>
+                    Viewing Mode: ${vmode.value}<br>
+                    Snacks: ${snacksList}<br>
+                    Movie Time: ${mtime}</span>`;
+            }
+        });
+    </script>
+</body>
+</html>
