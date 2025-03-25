@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input.invalid {
+            border-color: red;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .btn {
+            background: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registrationForm">
+            <input type="text" id="fullName" placeholder="Full Name">
+            <div class="error" id="fullNameError"></div>
+
+            <input type="email" id="email" placeholder="Email Address">
+            <div class="error" id="emailError"></div>
+
+            <input type="password" id="password" placeholder="Password">
+            <div class="error" id="passwordError"></div>
+
+            <input type="password" id="confirmPassword" placeholder="Confirm Password">
+            <div class="error" id="confirmPasswordError"></div>
+
+            <input type="text" id="phone" placeholder="Phone Number">
+            <div class="error" id="phoneError"></div>
+
+            <input type="date" id="dob">
+            <div class="error" id="dobError"></div>
+
+            <label>Gender:</label>
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <div class="error" id="genderError"></div>
+
+            <input type="checkbox" id="terms"> I agree to the terms & conditions
+            <div class="error" id="termsError"></div>
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            function showError(id, message) {
+                document.getElementById(id).innerText = message;
+                isValid = false;
+            }
+
+            function clearError(id) {
+                document.getElementById(id).innerText = "";
+            }
+
+            let fullName = document.getElementById("fullName").value;
+            if (fullName.length < 3) showError("fullNameError", "At least 3 characters required");
+            else clearError("fullNameError");
+
+            let email = document.getElementById("email").value;
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) showError("emailError", "Invalid email format");
+            else clearError("emailError");
+
+            let password = document.getElementById("password").value;
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordPattern.test(password)) showError("passwordError", "Must be 8+ chars with upper, lower, number & special char");
+            else clearError("passwordError");
+
+            let confirmPassword = document.getElementById("confirmPassword").value;
+            if (confirmPassword !== password) showError("confirmPasswordError", "Passwords do not match");
+            else clearError("confirmPasswordError");
+
+            let phone = document.getElementById("phone").value;
+            let phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(phone)) showError("phoneError", "Phone must be 10 digits");
+            else clearError("phoneError");
+
+            let dob = document.getElementById("dob").value;
+            let today = new Date();
+            let birthDate = new Date(dob);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            let monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) age--;
+            if (age < 18) showError("dobError", "Must be at least 18 years old");
+            else clearError("dobError");
+
+            let genderSelected = document.querySelector("input[name='gender']:checked");
+            if (!genderSelected) showError("genderError", "Select your gender");
+            else clearError("genderError");
+
+            let terms = document.getElementById("terms").checked;
+            if (!terms) showError("termsError", "You must agree to the terms");
+            else clearError("termsError");
+
+            if (isValid) alert("Registration successful!");
+        });
+    </script>
+</body>
+</html>

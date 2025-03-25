@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input.invalid, select.invalid, textarea.invalid {
+            border-color: red;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .btn {
+            background: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Job Application</h2>
+        <form id="jobApplicationForm">
+            <input type="text" id="fullName" placeholder="Full Name">
+            <div class="error" id="fullNameError"></div>
+
+            <input type="email" id="email" placeholder="Email Address">
+            <div class="error" id="emailError"></div>
+
+            <input type="text" id="phone" placeholder="Phone Number">
+            <div class="error" id="phoneError"></div>
+
+            <select id="position">
+                <option value="">Select Position</option>
+                <option value="Software Engineer">Software Engineer</option>
+                <option value="Data Analyst">Data Analyst</option>
+                <option value="Project Manager">Project Manager</option>
+            </select>
+            <div class="error" id="positionError"></div>
+
+            <input type="file" id="resume" accept=".pdf, .docx">
+            <div class="error" id="resumeError"></div>
+
+            <textarea id="coverLetter" placeholder="Cover Letter (Min 50 characters)"></textarea>
+            <div class="error" id="coverLetterError"></div>
+
+            <button type="submit" class="btn">Apply</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("jobApplicationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            function showError(id, message) {
+                document.getElementById(id).innerText = message;
+                isValid = false;
+            }
+
+            function clearError(id) {
+                document.getElementById(id).innerText = "";
+            }
+
+            let fullName = document.getElementById("fullName").value;
+            if (fullName.length < 3) showError("fullNameError", "At least 3 characters required");
+            else clearError("fullNameError");
+
+            let email = document.getElementById("email").value;
+            let emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+            if (!emailPattern.test(email)) showError("emailError", "Invalid email format");
+            else clearError("emailError");
+
+            let phone = document.getElementById("phone").value;
+            let phonePattern = /^\\d{10}$/;
+            if (!phonePattern.test(phone)) showError("phoneError", "Phone must be 10 digits");
+            else clearError("phoneError");
+
+            let position = document.getElementById("position").value;
+            if (!position) showError("positionError", "Please select a position");
+            else clearError("positionError");
+
+            let resume = document.getElementById("resume").files[0];
+            if (!resume) {
+                showError("resumeError", "Please upload a resume");
+            } else {
+                let allowedExtensions = /\\.(pdf|docx)$/i;
+                if (!allowedExtensions.test(resume.name)) showError("resumeError", "Only PDF or DOCX files allowed");
+                else if (resume.size > 2 * 1024 * 1024) showError("resumeError", "Max file size is 2MB");
+                else clearError("resumeError");
+            }
+
+            let coverLetter = document.getElementById("coverLetter").value;
+            if (coverLetter.length < 50) showError("coverLetterError", "At least 50 characters required");
+            else clearError("coverLetterError");
+
+            if (isValid) alert("Application submitted successfully!");
+        });
+    </script>
+</body>
+</html>

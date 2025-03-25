@@ -1,0 +1,13 @@
+.profile-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 10px;
+  }
+  
+  .profile-photo {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
